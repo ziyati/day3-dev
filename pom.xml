@@ -18,13 +18,12 @@
 	</properties>
 	<dependencies>
 
-	<dependency>
-<groupId>org.sonarsource.scanner.maven</groupId>
-<artifactId>sonar-maven-plugin</artifactId>
-<version>3.7.0.1746</version>
+
+<dependency>
+    <groupId>org.sonarsource.scanner.maven</groupId>
+    <artifactId>sonar-maven-plugin</artifactId>
+    <version>5.1.0.4751</version>
 </dependency>
-
-
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -48,13 +47,10 @@
 <activeByDefault>true</activeByDefault>
 </activation>
 <properties>
-<!-- Optional URL to server. Default value is
-http://localhost:9000 -->
-<sonar.host.url>
-http://localhost:9000
-</sonar.host.url>
-<sonar.login>admin</sonar.login>
-<sonar.password>sqa_85dfd9662b6e5c947b256d4b200ecbac1617b861</sonar.password>
+    <!-- SonarQube server URL -->
+    <sonar.host.url>http://localhost:9000</sonar.host.url>
+    <!-- Token-based authentication (recommended) -->
+    <sonar.token>sqa_85dfd9662b6e5c947b256d4b200ecbac1617b861</sonar.token>
 </properties>
 </profile>
 </profiles>

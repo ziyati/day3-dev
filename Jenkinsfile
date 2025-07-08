@@ -1,39 +1,37 @@
+
 pipeline {
-    agent any
-        tools{
-        maven 'maven'
+  agent any
+  tools {
+    maven 'maven'
+  }
+  environment {
+    SONAR_URL = "http://localhost:9000"
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git branch: 'main', credentialsId: 'git-connect', url: 'https://github.com/ziyati/day3-dev'
+      }
     }
-    environment {
-        NEXUS_DOCKER_REPO = 'nexus:8082'
-        REPOSITORY ='/repository/myrep'
+
+    stage("Build") {
+      steps {
+        sh 'mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install'
+      }
     }
-    stages {
-        stage('Getting') {
-            steps {
-                // Get some code from a GitHub repository
-git branch: 'main', credentialsId: '2bfc22ce-995e-4d2c-bdb5-d707df6dbbd1', url: 'https://github.com/ziyati/java_code'                // Run Maven on a Unix agent.
-            }
-        }
-        stage('Build') {
-            steps {
-                sh '''
-                    echo "Starting Maven build..."
-                    mvn -Dmaven.test.failure.ignore=true clean package || {
-                      echo "Maven build failed."
-                      exit 1
-                    }
-                '''
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh '''
-                    echo "Starting Maven build..."
-                    docker build -t myimage:v1 .
-                    docker tag myimage:v2 $NEXUS_DOCKER_REPO/$REPOSITORY/myimage:v1 
-                    docker push $NEXUS_DOCKER_REPO/$REPOSITORY/myimage:v1 $NEXUS_DOCKER_REPO
-                '''
-            }
-        }
+    stage("SonarQube Analysis") {
+      steps {
+        sh 'mvn sonar:sonar -Dsonar.host.url=$SONAR_URL'
+      }
     }
+    stage('Approve Deployment') {
+      input {
+        message "Do you want to proceed for deployment?"
+      }
+      steps {
+        sh 'echo "Deploying into Server"'
+      }
+    }
+  }
 }

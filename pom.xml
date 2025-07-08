@@ -54,7 +54,7 @@ http://localhost:9000 -->
 http://localhost:9000
 </sonar.host.url>
 <sonar.login>admin</sonar.login>
-<sonar.password>Passw.rd123</sonar.password>
+<sonar.password>sqa_85dfd9662b6e5c947b256d4b200ecbac1617b861</sonar.password>
 </properties>
 </profile>
 </profiles>

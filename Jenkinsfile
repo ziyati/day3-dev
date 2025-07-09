@@ -26,10 +26,8 @@ pipeline {
       }
     }
     stage('Approve Deployment') {
-      input {
-        message "Do you want to proceed for deployment?"
-      }
       steps {
+        input message: 'Do you want to proceed for deployment?'
         sh 'echo "Deploying into Server"'
       }
     }

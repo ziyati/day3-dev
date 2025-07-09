@@ -34,4 +34,15 @@ pipeline {
       }
     }
   }
+    post {
+    aborted {
+      echo "Sending message to agent"
+    }
+    failure {
+      echo "Sending message to agent"
+    }
+    success {
+      echo "Sending message to agent"
+    }
+  }
 }
